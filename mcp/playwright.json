@@ -1,0 +1,6 @@
+{
+  "name": "playwright",
+  "description": "Browser automation and end-to-end testing via Playwright",
+  "command": "npx",
+  "args": ["@playwright/mcp"]
+}
