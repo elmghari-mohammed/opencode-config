@@ -2,6 +2,8 @@
 
 > A reusable OpenCode / AI CLI configuration — skills, MCP servers, and overrides.
 
+[![GitHub](https://img.shields.io/badge/github-elmghari--mohammed/opencode--config-181717?logo=github)](https://github.com/elmghari-mohammed/opencode-config.git)
+
 This repo is designed to work with **OpenCode** and any **AI CLI tool** that supports [MCP servers](https://modelcontextprotocol.io) and custom skill definitions.
 
 ---
@@ -20,7 +22,7 @@ This repo is designed to work with **OpenCode** and any **AI CLI tool** that sup
 ### 1. Clone
 
 ```bash
-git clone https://github.com/<your-username>/opencode-config.git ~/.opencode
+git clone https://github.com/elmghari-mohammed/opencode-config.git ~/.opencode
 cd ~/.opencode
 ```
 
