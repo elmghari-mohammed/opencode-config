@@ -71,24 +71,25 @@ OpenCode will auto-discover the config at `~/.opencode/opencode.json`. If you're
 
 ```
 ~/.opencode/
-├── opencode.json       # Main configuration (skills paths, MCP servers)
-├── skills/             # Custom skill definitions (markdown)
-│   ├── architecture/
-│   ├── backend/
-│   ├── code-quality/
-│   ├── debugging/
-│   ├── designer/
-│   ├── frontend/
-│   ├── performance/
-│   ├── refactoring/
-│   ├── review/
-│   ├── superpower/
-│   └── testing/
-├── mcp/                # Standalone MCP server JSON files
+├── opencode.json         # Main config: skills paths, 7 MCP servers
+├── skills/
+│   ├── architecture/     # System design & layering
+│   ├── backend/          # APIs & data flow
+│   ├── code-quality/     # Linting & maintainability
+│   ├── debugging/        # Bug diagnosis
+│   ├── designer/         # UI/UX design
+│   ├── frontend/         # React & components
+│   ├── performance/      # Profiling & optimization
+│   ├── refactoring/      # Safe refactors
+│   ├── review/           # Code review
+│   ├── superpower/       # Task execution discipline
+│   └── testing/          # Test strategy
+├── mcp/                  # Standalone MCP server configs
 │   ├── github.json
 │   └── playwright.json
-├── overrides/          # Behavior overrides (add your own)
-├── .env.example        # Template for secrets
+├── overrides/            # Behaviour overrides
+├── .env                  # API keys (gitignored)
+├── .env.example          # Template for .env
 ├── .gitignore
 ├── package.json
 └── README.md
