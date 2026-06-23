@@ -1,12 +1,46 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"],
   "skills": {
-    "directory": "skills"
+    "paths": ["~/.opencode/skills"]
   },
   "mcp": {
-    "directory": "mcp"
-  },
-  "overrides": {
-    "directory": "overrides"
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "@playwright/mcp"]
+    },
+    "github": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-github"]
+    },
+    "context7": {
+      "type": "local",
+      "command": ["npx", "-y", "@upstash/context7-mcp"],
+      "environment": {
+        "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
+      }
+    },
+    "brave-search": {
+      "type": "local",
+      "command": ["npx", "-y", "@brave/brave-search-mcp-server", "--transport", "stdio"],
+      "environment": {
+        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+      }
+    },
+    "firecrawl": {
+      "type": "local",
+      "command": ["npx", "-y", "firecrawl-mcp"],
+      "environment": {
+        "FIRECRAWL_API_KEY": "${FIRECRAWL_API_KEY}"
+      }
+    },
+    "vercel": {
+      "type": "remote",
+      "url": "https://mcp.vercel.com"
+    },
+    "composio": {
+      "type": "remote",
+      "url": "https://connect.composio.dev/mcp"
+    }
   }
 }
