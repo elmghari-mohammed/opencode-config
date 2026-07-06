@@ -4,6 +4,17 @@
   "skills": {
     "paths": ["~/.opencode/skills"]
   },
+  "provider": {
+    "github-copilot": {
+      "models": {
+        "gpt-4.1": {},
+        "gpt-4o": {},
+        "gpt-4o-mini": {},
+        "claude-sonnet-4-20250514": {},
+        "gemini-2.5-flash": {}
+      }
+    }
+  },
   "experimental": {
     "mcp_timeout": 30000
   },
