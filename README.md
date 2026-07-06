@@ -10,10 +10,11 @@ This repo is designed to work with **OpenCode** and any **AI CLI tool** that sup
 
 ## ✨ Features
 
-- **11 custom skills** — architecture, backend, code-quality, debugging, designer, frontend, performance, refactoring, review, superpower, testing
-- **7 pre-configured MCP servers** — Playwright, GitHub, Context7, Brave Search, Firecrawl, Vercel, Composio
+- **13 custom skills** — architecture, backend, code-quality, concept-guide, debugging, designer, frontend, performance, refactoring, review, smart-ocr, superpower, testing
+- **8 pre-configured MCP servers** — Playwright, GitHub, Context7, Brave Search, Firecrawl, Vercel, Composio, NotebookLM
 - **Superpowers plugin** — advanced workflows, brainstorming, TDD, plan execution, and more
-- **Portable** — easy to fork, clone, and adapt to your own workflow
+- **MCP timeout raised to 30s** — prevents timeouts on slow MCP responses
+- **Portable** — clone on any machine, copy `.env`, and go
 
 ---
 
@@ -47,23 +48,21 @@ Edit `.env` with your actual API keys. The config uses these services:
 | `CONTEXT7_API_KEY` | [Context7](https://context7.com) | Documentation lookup |
 | `BRAVE_API_KEY` | [Brave Search](https://brave.com/search/api/) | Web search |
 | `FIRECRAWL_API_KEY` | [Firecrawl](https://firecrawl.dev) | Web scraping & crawling |
+| `VERCEL_ACCESS_TOKEN` | [Vercel](https://vercel.com) | Deployments & project management |
 
-> Some MCP servers (Playwright, GitHub, Vercel, Composio) don't require API keys — GitHub needs a [GitHub PAT](https://github.com/settings/tokens) in your shell environment as `GITHUB_TOKEN`.
+> Some MCP servers (Playwright, NotebookLM, Composio) don't require API keys. GitHub uses a [GitHub PAT](https://github.com/settings/tokens) set as `GITHUB_TOKEN` in your shell.
 
 ### 4. Configure GitHub token (optional)
 
-For the GitHub MCP server, set this environment variable:
+Set this environment variable in your shell profile:
 
 ```bash
-# PowerShell
-$env:GITHUB_TOKEN = "ghp_..."
+export GITHUB_TOKEN="ghp_..."
 ```
-
-Or add it to your shell profile.
 
 ### 5. Link OpenCode
 
-OpenCode will auto-discover the config at `~/.opencode/opencode.json`. If you're using another AI CLI, symlink or copy the config as needed.
+OpenCode auto-discovers config at `~/.opencode/opencode.json`. If you use another AI CLI, symlink or copy the config as needed.
 
 ---
 
@@ -71,23 +70,21 @@ OpenCode will auto-discover the config at `~/.opencode/opencode.json`. If you're
 
 ```
 ~/.opencode/
-├── opencode.json         # Main config: skills paths, 7 MCP servers
+├── opencode.json         # Main config: skills paths, 8 MCP servers
 ├── skills/
 │   ├── architecture/     # System design & layering
 │   ├── backend/          # APIs & data flow
 │   ├── code-quality/     # Linting & maintainability
+│   ├── concept-guide/    # Technical concept explanations
 │   ├── debugging/        # Bug diagnosis
 │   ├── designer/         # UI/UX design
 │   ├── frontend/         # React & components
 │   ├── performance/      # Profiling & optimization
 │   ├── refactoring/      # Safe refactors
 │   ├── review/           # Code review
+│   ├── smart-ocr/        # OCR & text extraction
 │   ├── superpower/       # Task execution discipline
 │   └── testing/          # Test strategy
-├── mcp/                  # Standalone MCP server configs
-│   ├── github.json
-│   └── playwright.json
-├── overrides/            # Behaviour overrides
 ├── .env                  # API keys (gitignored)
 ├── .env.example          # Template for .env
 ├── .gitignore
@@ -102,16 +99,18 @@ OpenCode will auto-discover the config at `~/.opencode/opencode.json`. If you're
 Each skill is a markdown file under `skills/<name>/SKILL.md` with front-matter metadata. When you invoke a skill in OpenCode, it loads these instructions to guide the AI's behavior.
 
 | Skill | Use Case |
-|---|---|
+|---|---|---|
 | `architecture` | System design, module boundaries, layering |
 | `backend` | APIs, data flow, server logic, service integration |
 | `code-quality` | Linting, review, maintainability |
+| `concept-guide` | Explain technical concepts with step-by-step examples |
 | `debugging` | Bug diagnosis, failure tracing, root cause analysis |
 | `designer` | UI/UX design, layout decisions, visual polish |
 | `frontend` | React UI, components, state, forms, browser behavior |
 | `performance` | Profiling, optimization, reducing wasted work |
 | `refactoring` | Safe refactors, simplifying code, reducing duplication |
 | `review` | Code review, risk spotting, regression detection |
+| `smart-ocr` | OCR & text extraction from images/scanned PDFs |
 | `superpower` | Fast context gathering, task execution discipline |
 | `testing` | Test strategy, writing tests, improving coverage |
 
@@ -121,7 +120,7 @@ Each skill is a markdown file under `skills/<name>/SKILL.md` with front-matter m
 
 ## 🔌 MCP Servers
 
-The config currently bundles **7 MCP servers**:
+The config currently bundles **8 MCP servers**:
 
 | Server | Type | Purpose |
 |---|---|---|
@@ -130,6 +129,7 @@ The config currently bundles **7 MCP servers**:
 | [Context7](https://context7.com) | Local | Framework & library documentation lookup |
 | [Brave Search](https://brave.com/search/api/) | Local | Web search (requires API key) |
 | [Firecrawl](https://firecrawl.dev) | Local | Web scraping & crawling (requires API key) |
+| [NotebookLM](https://notebooklm.google.com) | Local | AI research notebook, podcast generation |
 | [Vercel](https://vercel.com) | Remote | Deployments, projects, teams |
 | [Composio](https://composio.dev) | Remote | 500+ app integrations (Gmail, Slack, Notion, etc.) |
 
@@ -142,25 +142,12 @@ Edit `opencode.json` and add a new entry under `mcp`:
   "type": "local",
   "command": ["npx", "-y", "@scope/my-server"],
   "environment": {
-    "MY_KEY": "${MY_KEY}"
+    "MY_KEY": "{env:MY_KEY}"
   }
 }
 ```
 
-### Adding from the `mcp/` directory
-
-Create a JSON file in `mcp/`:
-
-```json
-{
-  "name": "my-server",
-  "description": "What it does",
-  "command": "npx",
-  "args": ["-y", "@scope/my-server"]
-}
-```
-
-Then reference it in `opencode.json`.
+All MCP servers are configured centrally in `opencode.json`. No additional files needed.
 
 ---
 
@@ -184,10 +171,6 @@ description: What this skill does
 
 Instructions for the AI when this skill is invoked.
 ```
-
-### Add overrides
-
-Place override files in `overrides/`. These can modify OpenCode's default behavior (e.g., custom agent instructions, tool permissions).
 
 ### Use with other AI CLIs
 
