@@ -2,7 +2,7 @@
   "$schema": "https://opencode.ai/config.json",
   "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"],
   "skills": {
-    "paths": ["~/.opencode/skills"]
+    "paths": ["~/.opencode/skills", "~/.agents/skills"]
   },
   "mcp": {
     "playwright": {
@@ -37,14 +37,15 @@
     "vercel": {
       "type": "remote",
       "url": "https://mcp.vercel.com",
-      "enabled": true,
-      "headers": {
-        "Authorization": "Bearer {env:VERCEL_ACCESS_TOKEN}"
-      }
+      "enabled": true
     },
     "composio": {
       "type": "remote",
       "url": "https://connect.composio.dev/mcp"
+    },
+    "notebooklm": {
+      "type": "local",
+      "command": ["npx", "-y", "notebooklm-mcp-server", "start"]
     }
   }
 }
