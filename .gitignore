@@ -4,6 +4,7 @@ package-lock.json
 bun.lock
 yarn.lock
 .pnpm-store/
+bin/
 *.log
 .DS_Store
 Thumbs.db

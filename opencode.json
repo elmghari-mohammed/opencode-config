@@ -4,6 +4,9 @@
   "skills": {
     "paths": ["~/.opencode/skills"]
   },
+  "experimental": {
+    "mcp_timeout": 30000
+  },
   "mcp": {
     "playwright": {
       "type": "local",

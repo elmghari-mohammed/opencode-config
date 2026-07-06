@@ -1,6 +1,0 @@
-{
-  "name": "github",
-  "description": "GitHub API integration — issues, PRs, repos, search",
-  "command": "npx",
-  "args": ["-y", "@modelcontextprotocol/server-github"]
-}
